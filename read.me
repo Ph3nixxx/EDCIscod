@@ -1,0 +1,31 @@
+1. Ajouter l’énumération dans le schéma de article.model.js avec deux valeurs : draft, published
+=> Rédigez le code dans api/articles/articles.model.js
+
+2. Créer les endpoints de création, mise à jour et suppression d’un article. L’utilisateur doit être connecté pour effectuer la création.
+=> Rédigez le code dans /api/articles/articles.service.js avec les 3 méthodes (création, mise à jour, suppression)
+=> Rédigez le code dans api/articles/articles.controller.js avec les 3 méthodes correspondant au contrôleur
+=> Rédigez les routes dans api/articles/articles.router.js. Pensez à l’ajouter dans votre application (server.js)
+=> Pensez à ajouter le temps réel dans le contrôleur
+=> Modifiez le middleware d’authentification afin de faire récupérer toutes les informations d’un utilisateur et les faire passer dans « req » (et pas seulement l’id de l’utilisateur)
+=> Faites en sorte que la modification et la suppression (dans le contrôleur) s’effectuent seulement si l’utilisateur est « admin » (propriété « role » sur l’utilisateur).
+=> Lors de la création, faites un enregistrement en utilisant l’id de l’utilisateur connecté
+
+3. Créer le endpoint public pour afficher les articles d’un utilisateur. Le endpoint doit être sous la forme api/users/:userId/articles
+Attention, le endpoint doit être public donc pensez à ne pas la bloquer avec le middleware d’authentification sans le vouloir !
+Le endpoint contient 1 paramètre : l’identifiant de l’utilisateur donc
+=> Ajoutez le code dans api/users/users.controller.js
+=> Ecrivez la méthode dans le service (api/articles/articles.service.js) en utilisant la méthode populate() de Mongoose. Récupérer tous les articles d’un utilisateur, (ne pas afficher le mot de passe)
+
+// Pas encore réalisé
+4. Créer les tests unitaires du point n°2 (création, mise à jour , suppression)
+A partir d’un nouveau fichier dans le dossier « tests », nommez le « articles.spec.js », rédigez les 3 tests en utilisant « supertest ».
+=> Vérifiez le code de la réponse de la requête
+=> Ecrivez les mocks pour donner des réponses fictives (vous pouvez utilisez un module comme mockingoose, si vous le souhaitez)
+
+// Effectué
+5. Etablir une configuration de déploiement
+Ouvrez le fichier « ecosystem.config.js », et ajoutez les besoins suivants :
+=> On doit avoir un fichier log en cas d’erreur s’enregistrant dans /logs/err.log
+=> Utilisation de la mémoire maximum: 200 Mo
+Enfin, donnez  la commande PM2 pour lancer votre application avec 3 instances en parallèle
+Aidez vous de la documentation de PM2 : https://pm2.keymetrics.io/docs/usage/application-declaration/
