@@ -20,6 +20,7 @@ class ArticlesController {
       }
     async update(req, res, next) {
         try {
+          const token = req.headers["x-access-token"];
           const decoded = jwt.verify(token, config.secretJwtToken);
           req.user = decoded;
           console.log(decoded)
@@ -28,6 +29,7 @@ class ArticlesController {
             const data = req.body;
             const articleModified = await articlesService.update(id, data);
             req.io.emit("article:update", article);
+            res.status(200).json(article);
             res.json(articleModified);
           } else {
             throw new UnauthorizedError();
@@ -38,6 +40,7 @@ class ArticlesController {
     }
     async delete(req, res, next) {
         try {
+          const token = req.headers["x-access-token"];
           const decoded = jwt.verify(token, config.secretJwtToken);
           req.user = decoded;
           console.log(decoded)

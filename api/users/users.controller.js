@@ -3,6 +3,7 @@ const UnauthorizedError = require("../../errors/unauthorized");
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
 const usersService = require("./users.service");
+const articlesService = require("../articles/articles.service");
 
 class UsersController {
   async getAll(req, res, next) {
@@ -77,11 +78,8 @@ class UsersController {
 
   async getArticlesForOneUser(req, res, next) {
     try {
-      const articles = await Article.find().populate({
-        path: "user",
-        select: "-password",
-        match: { name: /ben/i },
-      });
+      const articles = await articlesService.getAll();
+      res.json(articles);
     } catch(err) {
       next(err);
     }

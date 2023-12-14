@@ -14,12 +14,12 @@ class ArticleService {
     delete(id) {
         return Article.deleteOne({ _id: id });
     }
-    getArticlesForOneUser(id) {
+    getArticlesForOneUser(userId) {
         return Article.find().populate({
             path: "user",
             select: "-password",
-            match: { _id: id },
-          });
+            match: { _id: userId },
+        });
     }
 }
 
