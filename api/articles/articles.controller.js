@@ -20,10 +20,6 @@ class ArticlesController {
       }
     async update(req, res, next) {
         try {
-          const token = req.headers["x-access-token"];
-          const decoded = jwt.verify(token, config.secretJwtToken);
-          req.user = decoded;
-          console.log(decoded)
           if(req.user.role.value === "admin") {
             const id = req.params.id;
             const data = req.body;
@@ -40,10 +36,6 @@ class ArticlesController {
     }
     async delete(req, res, next) {
         try {
-          const token = req.headers["x-access-token"];
-          const decoded = jwt.verify(token, config.secretJwtToken);
-          req.user = decoded;
-          console.log(decoded)
           if(req.user.role.value === "admin") {
             const id = req.params.id;
             await articlesService.delete(id);
